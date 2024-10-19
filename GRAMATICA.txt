@@ -1,0 +1,33 @@
+INICIOTODO
+INICIO1
+TOKENS TOKEN 1 = DIGITO DIGITO * TOKEN 2 = '"' CHARSET '"' | '''
+CHARSET ''' TOKEN 4 = '=' TOKEN 5 = '<' '>' TOKEN 6 = '<' TOKEN 7 = '>'
+TOKEN 8 = '>=' TOKEN 9 = '<=' TOKEN 10 = '+' TOKEN 11 = '-'
+TOKEN 12 = 'OR' TOKEN 13 = 'AND' TOKEN 14 = 'MOD'
+TOKEN 15 = 'DIV' TOKEN 16 = 'NOT'
+TOKEN 17 = '(' TOKEN 18 = ')' TOKEN 19 = ';' TOKEN 20 = ','
+TOKEN 21 = '.' TOKEN 22 = ':=' TOKEN 23 = 'LET'
+TOKEN 24 = '{' TOKEN 25 = '}'
+TOKEN 26 = ':'
+FIN1
+
+SETEO
+usuario123@gmail.com
+test123@gmail.com;
+isc$
+abc@xyz.com, def@xyz.com;
+ifito
+usuario@dominio.com%prueba@dominio.com;
+Finseteo
+
+Lisp
+> (defun factorial (n)
+(cond ((= n 0) 1)
+((> n 0) (* n (factorial (- n 1)))))
+)
+
+> (factorial 5)
+120
+lisp
+
+FIN$TODO
