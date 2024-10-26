@@ -1,5 +1,7 @@
 umg\com\metodosfinal\ErrorManager.class
-umg\com\metodosfinal\Token.class
 umg\com\metodosfinal\GramaticaProcessor.class
 umg\com\metodosfinal\MetodosFinal.class
+umg\com\metodosfinal\RuleSet.class
 umg\com\metodosfinal\TiposTokens.class
+umg\com\metodosfinal\Token.class
+umg\com\metodosfinal\TokenFactory.class

@@ -11,7 +11,16 @@ package umg.com.metodosfinal;
 public enum TiposTokens {
     DIGITO("[0-9]+"),
     OPERADOR("[*|/|+|-]"),
-    CORREO("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}");
+    CORREO("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}"),
+    OR("OR"),
+    AND("AND"),
+    FOR("fr"),
+    IF("ifito"),
+    CASE("isc\\$"),
+    SETS("SETS"),
+    RESERVADA("RESERVADA"), // Tipo para palabras reservadas
+    IDENTIFICADOR("[a-zA-Z_][a-zA-Z0-9_]*"),
+    ERROR("ERROR");
 
     public final String patron;
 
@@ -19,27 +28,3 @@ public enum TiposTokens {
         this.patron = patron;
     }
 }
-
-
-/* public enum TiposTokens {
-    NUMERO("[0-9]+"),  
-    OPERADOR("[*|/|+|-]"),
-    PARENTESIS_APERTURA("\\("),
-    PARENTESIS_CIERRE("\\)"),
-    PALABRA_RESERVADA("(SETEO|isc\\$|ifito)"),  // Palabras reservadas de tu gramática
-    OR("\\|"),  // OR lógico
-    AND("\\$"),  // AND lógico
-    EMAIL("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}"),  // Formato básico de correo electrónico
-    ERROR(".+");  // Cualquier token que no coincida con las reglas anteriores (posible error)
-
-    private final String patron;
-
-    TiposTokens(String patron) {
-        this.patron = patron;
-    }
-
-    public String getPatron() {
-        return patron;
-    }
-} */
-

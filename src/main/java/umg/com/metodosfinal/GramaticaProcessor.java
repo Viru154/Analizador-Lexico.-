@@ -13,11 +13,10 @@ import java.io.IOException;
  *
  * @author Viru154
  */
+
 public class GramaticaProcessor {
 
-    // Método que ahora acepta el nombre del archivo como argumento
     public void procesarArchivo(String nombreArchivo) {
-
         try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
             String linea;
             String seccionActual = "";
@@ -26,6 +25,7 @@ public class GramaticaProcessor {
                 linea = linea.trim();
                 System.out.println("\nLinea leida: " + linea);
 
+                // Identificar la sección actual
                 if (linea.startsWith("TOKENS")) {
                     seccionActual = "TOKENS";
                     System.out.println("\nSeccion: TOKENS");
@@ -37,6 +37,7 @@ public class GramaticaProcessor {
                     System.out.println("\nSeccion: LISP");
                 }
 
+                // Procesar la línea según la sección
                 switch (seccionActual) {
                     case "TOKENS" -> {
                         System.out.println("Procesando como TOKEN\n");
@@ -50,9 +51,7 @@ public class GramaticaProcessor {
                         System.out.println("Procesando como LISP\n");
                         procesarLisp(linea);
                     }
-                    default -> {
-                        System.out.println("Linea fuera de secciones.\n");
-                    }
+                    default -> System.out.println("Linea fuera de secciones.\n");
                 }
             }
         } catch (IOException e) {
@@ -60,20 +59,26 @@ public class GramaticaProcessor {
         }
     }
 
-    // Método para procesar la sección TOKENS
     public void procesarTokens(String linea) {
-        System.out.println("Procesando Tokens: " + linea);
+        if (RuleSet.validateLine(linea)) {
+            System.out.println("Linea valida: " + linea);
+            String[] palabras = linea.split("\\s+");
+            for (String palabra : palabras) {
+                Token token = TokenFactory.createToken(palabra);
+                System.out.println("Token creado: (" + token.getTipo() + ": " + token.getValor() + ")");
+            }
+        } else {
+            System.out.println("Linea invalida: " + linea);
+        }
     }
 
-    // Método para procesar la sección SETEO
     public void procesarSeteo(String linea) {
         System.out.println("Procesando Seteo: " + linea);
+        // Aquí puedes agregar más lógica específica para procesar SETEO
     }
 
-    // Método para procesar la sección LISP
     public void procesarLisp(String linea) {
         System.out.println("Procesando Lisp: " + linea);
+        // Aquí puedes agregar más lógica específica para procesar Lisp
     }
 }
-
-

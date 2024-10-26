@@ -10,8 +10,8 @@ package umg.com.metodosfinal;
  */
 
 public class Token {
-    private TiposTokens tipo;
-    private String valor;
+    private final TiposTokens tipo;
+    private final String valor;
 
     public Token(TiposTokens tipo, String valor) {
         this.tipo = tipo;

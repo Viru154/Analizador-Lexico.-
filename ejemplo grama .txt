@@ -7,7 +7,8 @@ TOKEN 12 = 'OR' TOKEN 13 = 'AND' TOKEN 14 = 'MOD'
 TOKEN 15 = 'DIV' TOKEN 16 = 'NOT'
 TOKEN 17 = '(' TOKEN 18 = ')' TOKEN 19 = ';' TOKEN 20 = ','
 TOKEN 21 = '.' TOKEN 22 = ':=' TOKEN 23 = 'LET'
-TOKEN 24 = '{' TOKEN 25 = '}' TOKEN 26 = ':'
+TOKEN 24 = '{' TOKEN 25 = '}'
+TOKEN 26 = ':'
 FIN1
 
 SETEO
@@ -25,7 +26,9 @@ Lisp
 (cond ((= n 0) 1)
 ((> n 0) (* n (factorial (- n 1)))))
 )
+
 > (factorial 5)
 120
 lisp
+
 FIN$TODO
