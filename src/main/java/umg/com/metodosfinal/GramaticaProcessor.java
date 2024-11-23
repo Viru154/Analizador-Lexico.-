@@ -1,84 +1,58 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
-*/
-
 package umg.com.metodosfinal;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
-/**
- *
- * @author Viru154
- */
+import java.util.HashMap;
+import java.util.Map;
 
 public class GramaticaProcessor {
 
     public void procesarArchivo(String nombreArchivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
             String linea;
-            String seccionActual = "";
+            Map<String, Integer> conteoTokens = inicializarConteo();
 
             while ((linea = br.readLine()) != null) {
                 linea = linea.trim();
-                System.out.println("\nLinea leida: " + linea);
+                if (linea.isEmpty()) continue;
 
-                // Identificar la sección actual
-                if (linea.startsWith("TOKENS")) {
-                    seccionActual = "TOKENS";
-                    System.out.println("\nSeccion: TOKENS");
-                } else if (linea.startsWith("SETEO")) {
-                    seccionActual = "SETEO";
-                    System.out.println("\nSeccion: SETEO");
-                } else if (linea.startsWith("Lisp")) {
-                    seccionActual = "LISP";
-                    System.out.println("\nSeccion: LISP");
-                }
+                System.out.println("Linea leida: " + linea);
 
-                // Procesar la línea según la sección
-                switch (seccionActual) {
-                    case "TOKENS" -> {
-                        System.out.println("Procesando como TOKEN\n");
-                        procesarTokens(linea);
-                    }
-                    case "SETEO" -> {
-                        System.out.println("Procesando como SETEO\n");
-                        procesarSeteo(linea);
-                    }
-                    case "LISP" -> {
-                        System.out.println("Procesando como LISP\n");
-                        procesarLisp(linea);
-                    }
-                    default -> System.out.println("Linea fuera de secciones.\n");
+                // Dividir la línea en tokens con el nuevo separador
+                String[] palabras = linea.split("\\s+|(?=[^a-zA-Z0-9@._])|(?<=[^a-zA-Z0-9@._])");
+                for (String palabra : palabras) {
+                    if (palabra.isEmpty()) continue;
+
+                    Token token = TokenFactory.createToken(palabra);
+                    System.out.println("Token encontrado: (" + token.getTipo() + ": " + token.getValor() + ")");
+
+                    // Incrementar el conteo del tipo de token
+                    conteoTokens.put(token.getTipo().name(), conteoTokens.get(token.getTipo().name()) + 1);
                 }
             }
+
+            // Mostrar resultados
+            mostrarResultados(conteoTokens);
+
         } catch (IOException e) {
             System.out.println("Error al leer el archivo: " + e.getMessage());
         }
     }
 
-    public void procesarTokens(String linea) {
-        if (RuleSet.validateLine(linea)) {
-            System.out.println("Linea valida: " + linea);
-            String[] palabras = linea.split("\\s+");
-            for (String palabra : palabras) {
-                Token token = TokenFactory.createToken(palabra);
-                System.out.println("Token creado: (" + token.getTipo() + ": " + token.getValor() + ")");
-            }
-        } else {
-            System.out.println("Linea invalida: " + linea);
+    private Map<String, Integer> inicializarConteo() {
+        Map<String, Integer> conteo = new HashMap<>();
+        for (TiposTokens tipo : TiposTokens.values()) {
+            conteo.put(tipo.name(), 0);
         }
+        conteo.put("ERROR", 0); // Conteo especial para errores
+        return conteo;
     }
 
-    public void procesarSeteo(String linea) {
-        System.out.println("Procesando Seteo: " + linea);
-        // Aquí puedes agregar más lógica específica para procesar SETEO
-    }
-
-    public void procesarLisp(String linea) {
-        System.out.println("Procesando Lisp: " + linea);
-        // Aquí puedes agregar más lógica específica para procesar Lisp
+    private void mostrarResultados(Map<String, Integer> conteoTokens) {
+        System.out.println("\n=== Resultados del Analizador Lexico ===");
+        for (Map.Entry<String, Integer> entry : conteoTokens.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
 }

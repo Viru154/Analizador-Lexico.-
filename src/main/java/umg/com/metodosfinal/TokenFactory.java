@@ -5,39 +5,32 @@
 package umg.com.metodosfinal;
 
 /**
- *
- * @author Viru154
+ * Clase fabrica para crear tokens basados en una palabra.
  */
-
 public class TokenFactory {
 
+    /**
+     * Crea un token basado en el tipo correspondiente segun la palabra proporcionada.
+     *
+     * @param palabra La palabra a analizar.
+     * @return Una instancia de Token con su tipo correspondiente.
+     */
     public static Token createToken(String palabra) {
-        TiposTokens tipo;
-
-        if (RuleSet.isReservedWord(palabra)) {
-            tipo = TiposTokens.RESERVADA;
-        } else if (palabra.matches("[0-9]+")) {
-            tipo = TiposTokens.DIGITO;
-        } else if (palabra.matches("[*|/|+|-]")) {
-            tipo = TiposTokens.OPERADOR;
-        } else if (palabra.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}")) {
-            tipo = TiposTokens.CORREO;
-        } else if (palabra.equals("OR")) {
-            tipo = TiposTokens.OR;
-        } else if (palabra.equals("AND")) {
-            tipo = TiposTokens.AND;
-        } else if (palabra.equals("fr")) {
-            tipo = TiposTokens.FOR;
-        } else if (palabra.equals("ifito")) {
-            tipo = TiposTokens.IF;
-        } else if (palabra.equals("isc$")) {
-            tipo = TiposTokens.CASE;
-        } else {
-            tipo = TiposTokens.IDENTIFICADOR;
+        if (palabra == null || palabra.isEmpty()) {
+            return new Token(TiposTokens.ERROR, "Cadena nula o vacia");
         }
 
-        return new Token(tipo, palabra);
+        for (TiposTokens tipo : TiposTokens.values()) {
+            if (tipo.validar(palabra)) {
+                return new Token(tipo, palabra);
+            }
+        }
+
+        // Si no coincide con ningun tipo conocido, se clasifica como ERROR
+        return new Token(TiposTokens.ERROR, palabra);
     }
 }
+
+
 
 
